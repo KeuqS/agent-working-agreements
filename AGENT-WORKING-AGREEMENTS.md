@@ -225,14 +225,14 @@ folder (if nothing fits: `experiments/`, and say so). `./organize.sh` (dry-run b
 loose files and sweeps git locks; `--empty-trash --apply --yes` is **Brandon's command, not an agent's**.
 
 **Clones.** No clone of a repository, and no worktree, is written under `_agent/`. A scratch clone
-lives in the client's session scratch space, outside `_agent/` — your client file names where, or
-records that it is unmeasured. What persists is the evidence: the commands run and their output,
-under `evidence/`, with the remote and the commit needed to rebuild the clone. That is how this
-sits beside the `experiments/` line's "never /tmp": a transcript has to survive the session, a
-clone can be made again. The reason: a clone under `_agent/` is a nested repository in a store
-meant to replicate, a second copy of a project's source with its licence, and the one thing in
-`_agent/` that is rebuildable. This moves no lane worktree; those live beside the project checkout.
-(Brandon, 2026-10-12)
+lives in the client's own scratch directory, outside `_agent/` — your client file names that
+directory, or records that it is unmeasured. What persists is the evidence: the commands run and
+their output, under `evidence/`, with the remote and the commit needed to rebuild the clone. That
+is how this sits beside the `experiments/` line's "never /tmp": a transcript has to survive the
+session, a clone can be made again. The reason: a clone under `_agent/` is a nested repository in a
+store meant to replicate, a second copy of a project's source with its licence, and the one thing
+in `_agent/` that is rebuildable. This moves no lane worktree: where those live is unchanged and is
+each client file's to name. (Brandon, 2026-10-12)
 
 ## A7. GitHub paths
 
@@ -437,8 +437,9 @@ Brandon's review moves to the pull request. The orchestrator owns the branch unt
     not know a merge is in progress, and on the wave branch it blocks every other lane's merge;
     the pre-merge tip was reviewed, and the record keeps what the attempt learned.
   - **A red that a side's own gate record already shows is that side's, not the merge's:**
-    reported with that record, not fixed inside the merge. The orchestrator's merged-tree gate
-    before the push is unchanged.
+    reported with that record, not fixed inside the merge — a lane may hand back with a gate step
+    red by design, named in its handoff, and a fix to it inside the merge would be an unreviewed
+    change to that side's work. The orchestrator's merged-tree gate before the push is unchanged.
 - **The preflight runs once before each push that carries new work** — a lane landing, a release
   cut — and never before a push that only answers review findings, which the PR's own review
   covers; there is no re-run. An unavailable CLI never holds a push and never downgrades the mode:

@@ -37,8 +37,10 @@ Code fact.
   of hooks.
 - **Scratch clones (A6, "Clones"):** a scratch clone goes in the scratchpad directory the
   session's environment names [source 2026-10-12: the harness's session instructions], never
-  under `_agent/`. Sub-agents share it — a lane's environment named the same scratchpad directory
-  its orchestrator's dispatch placed it under [measured 2026-10-12] — so a dispatch names one
+  under `_agent/`. In the two dispatches measured, a sub-agent shared it: each one's own
+  environment named the directory its handoff's scratch subdirectory sat under [measured
+  2026-10-12: a lane and its Spec reviewer, by reading the environment's scratchpad line against
+  the handoff's path]; whether every dispatch shares it is unmeasured. So a dispatch names one
   subdirectory of it per sub-agent.
 - **Agent-tool dispatches in one message run concurrently — ≥ 3 measured** (2026-09-10; the ceiling
   is unmeasured).
