@@ -10,6 +10,28 @@ simply in order. A bare `(n)` after a source — "CodeRabbit on claude-skills #6
 of amendments in that batch**, not an ordinal; the two notations predate each other and neither is
 being retrofitted onto the other.
 
+- **2026-10-12 (#3) — Who resolves a conflicting lane merge, and how its gate is read.** Issue
+  #115: B2 had the orchestrator merge a lane after two-axis review, gate the merged tree and push,
+  and said nothing of a merge that does not apply cleanly, so an agent guessed who resolves, how
+  long to keep fixing, and which red is its own. **Decision (Brandon, 2026-10-12): the
+  recommended option on each of the three questions.** A new Git-contract bullet in B2 says: the
+  lane brings the wave branch into its own branch as a merge commit in its own worktree (not a
+  rebase, which would rewrite commits it has already reported), resolves, re-runs the gate, and
+  the resolution gets a scoped review; the orchestrator's merge is then clean. Where the lane is
+  no longer available, the orchestrator resolves and the resolution gets a scoped two-axis review
+  before the push. The reason: a resolution is new work, and no work reaches the wave branch
+  unreviewed. Inside a resolution the bound is the general one — one fix round on a red gate,
+  then stop and report — and the rule names the state the tree is left in: the pre-merge tip,
+  with the resolution's diff and the red gate's output saved under `evidence/` before `git merge
+  --abort`, because a branch left mid-merge holds unreviewed work where the next reader may not
+  know a merge is in progress, and on the wave branch blocks every other merge. The merge is
+  committed only once the gate shows no red of its own, so the abort is always available.
+  Stop-list item 4 now says it reaches this case. A red that a side's own gate record already
+  shows is that side's — reported with that record, not fixed inside the merge — and the
+  orchestrator's merged-tree gate before the push is unchanged. A4's worktree and two-axis
+  bullets and B2's Addenda point at the rule. What an agent does when `git am` of an approved
+  series conflicts on the attended path is not decided here and has no rule.
+
 - **2026-10-12 (#2) — No clone or worktree under `_agent/`.** Issue #114: A6 sent everything an
   agent produces under `_agent/` and named `experiments/` for scratch harnesses, saying nothing
   about clones, so scratch clones had been built there. A6 now carries a **Clones** rule: no

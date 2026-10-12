@@ -100,6 +100,7 @@ These hold in both modes; the `orchestrate` skill carries the loop, this file ca
   state — because that isolation is what makes concurrent lanes safe at all, and a lane that has
   run git in the shared checkout has left that isolation, whatever files it edited. B1's attended
   delivery of uncommitted edits to named files runs no git there and crosses neither fence.
+  A lane whose merge into the wave branch conflicts resolves it in its own worktree too (B2).
   [learnings: 2026-09-23 sfs-wave-1 §1]
 - **Every lane report states the model it ran on, and how it knows.** Requested, inherited,
   configured and backend-attested are four different claims; a dispatched tier resolves to whatever
@@ -140,8 +141,9 @@ These hold in both modes; the `orchestrate` skill carries the loop, this file ca
   **A trailer never established that a commit came through a reviewed lane.** The two-axis review
   record under `reviews/`, the gate evidence under `evidence/` and the PR trail do; report those.
 - **Two-axis review (Standards + Spec, `code-review` skill) on every delivery before acceptance —
-  riders and review-fix lanes included, no size exemption.** The lane's own report is never the
-  review; the verdict is recorded under the initiative's `reviews/`.
+  riders, review-fix lanes and merge-conflict resolutions (scoped to the resolution, B2)
+  included, no size exemption.** The lane's own report is never the review; the verdict is
+  recorded under the initiative's `reviews/`.
   [learnings: 2026-09-06 wave-6 §5; 2026-09-04 wave-5 §7]
 - **Distrust the issue until you've read the code.** Issues predate the tree; re-verify at pickup,
   read the comments, record direction changes as marked, dated comments.
@@ -421,6 +423,22 @@ Brandon's review moves to the pull request. The orchestrator owns the branch unt
   `coderabbit-preflight` when the push carries new work (below) and the CodeRabbit CLI is
   available to that client, then pushes.**
   Push after every lane merge — the remote is the backup and CI runs per merge so flakes surface early.
+- **A lane merge that conflicts goes back to the lane.** The lane merges the wave
+  branch into its own branch in its own worktree — a merge commit, never a rebase, which would
+  rewrite commits it has already reported — resolves there and re-runs the gate; the resolution
+  gets a scoped review, as an addendum's fix does; the orchestrator's merge is then clean. Only
+  where the lane is no longer available does the orchestrator resolve, and its resolution gets a
+  scoped two-axis review before the push. A resolution is new work, and no work reaches the wave
+  branch unreviewed (Brandon, 2026-10-12). Inside a resolution, whoever resolves:
+  - **One fix round on a red gate, then stop and report** (stop-list item 4), with the branch
+    back at its pre-merge tip. The merge is committed only once the gate shows no red of its own,
+    so stopping is: save the resolution's diff and the red gate's output under `evidence/`, then
+    `git merge --abort`. A branch left mid-merge holds unreviewed work where the next reader may
+    not know a merge is in progress, and on the wave branch it blocks every other lane's merge;
+    the pre-merge tip was reviewed, and the record keeps what the attempt learned.
+  - **A red that a side's own gate record already shows is that side's, not the merge's:**
+    reported with that record, not fixed inside the merge. The orchestrator's merged-tree gate
+    before the push is unchanged.
 - **The preflight runs once before each push that carries new work** — a lane landing, a release
   cut — and never before a push that only answers review findings, which the PR's own review
   covers; there is no re-run. An unavailable CLI never holds a push and never downgrades the mode:
@@ -446,13 +464,15 @@ Brandon's review moves to the pull request. The orchestrator owns the branch unt
 3. Anything destructive or irreversible — data migrations against shared infra, deletions outside
    the repo, secrets, third-party writes (CMS, DNS, billing).
    A billing prompt holds the paid review, never the push (A4).
-4. The CI gate still red after one fix round.
+4. The CI gate still red after one fix round — inside a merge-conflict resolution too, which
+   leaves the branch at its pre-merge tip (Git contract above).
 
 Non-blocking questions batch at the wave boundary. Rotation stays per wave with a packet.
 
 **Addenda:** a defect found in review goes back to the **same lane, in its worktree, as a new
 commit**, and is re-reviewed (scoped to the fix) before merge — never a fresh session, never the
 orchestrator's own hands. Work already merged into the wave branch goes through a fresh ticket.
+A lane merge that conflicts goes back to the lane the same way (Git contract above).
 
 **The review loop (Brandon + the orchestrator)**
 
