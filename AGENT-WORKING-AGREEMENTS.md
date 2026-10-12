@@ -192,7 +192,8 @@ A–B: on an on-fleet workspace, where agent artifacts are written is this secti
 `agent-workspace` convention carries it out), not a skill's default; off-fleet fallbacks remain
 the skill's to define.
 
-On an on-fleet workspace, everything an agent produces goes under `_agent/`:
+On an on-fleet workspace, everything an agent produces goes under `_agent/` — a clone is not a
+product (**Clones**, below):
 
 ```text
 _agent/
@@ -203,7 +204,8 @@ _agent/
 ├── plans/         execution plans, initiative briefs, grill records
 ├── analysis/      cross-repo findings that belong to no initiative
 ├── evidence/      raw captures for cross-initiative claims
-├── experiments/   scratch harnesses (never /tmp — the next session can't see it)
+├── experiments/   harnesses, scripts, and files you write that fit nowhere else (never /tmp —
+│                  the next session can't see it); never a clone or worktree
 ├── notes/         session scratch, decisions-in-progress
 ├── quarantine/    superseded docs kept for the trail (move, don't rewrite beyond recognition)
 ├── _trash/        staged for deletion — only Brandon empties this
@@ -219,6 +221,16 @@ updated at wave close. Date-prefix files
 `YYYY-MM-DD-`. Never a loose file at `_agent/` root or `sansfaux/` root; never a new top-level
 folder (if nothing fits: `experiments/`, and say so). `./organize.sh` (dry-run by default) tidies
 loose files and sweeps git locks; `--empty-trash --apply --yes` is **Brandon's command, not an agent's**.
+
+**Clones.** No clone of a repository, and no worktree, is written under `_agent/`. A scratch clone
+lives in the client's session scratch space, outside `_agent/` — your client file names where, or
+records that it is unmeasured. What persists is the evidence: the commands run and their output,
+under `evidence/`, with the remote and the commit needed to rebuild the clone. That is how this
+sits beside the `experiments/` line's "never /tmp": a transcript has to survive the session, a
+clone can be made again. The reason: a clone under `_agent/` is a nested repository in a store
+meant to replicate, a second copy of a project's source with its licence, and the one thing in
+`_agent/` that is rebuildable. This moves no lane worktree; those live beside the project checkout.
+(Brandon, 2026-10-12)
 
 ## A7. GitHub paths
 

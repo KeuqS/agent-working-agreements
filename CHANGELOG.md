@@ -10,6 +10,26 @@ simply in order. A bare `(n)` after a source — "CodeRabbit on claude-skills #6
 of amendments in that batch**, not an ordinal; the two notations predate each other and neither is
 being retrofitted onto the other.
 
+- **2026-10-12 (#2) — No clone or worktree under `_agent/`.** Issue #114: A6 sent everything an
+  agent produces under `_agent/` and named `experiments/` for scratch harnesses, saying nothing
+  about clones, so scratch clones had been built there. A6 now carries a **Clones** rule: no
+  clone of a repository, and no worktree, is written under `_agent/`; a scratch clone lives in
+  the client's session scratch space; what persists is the evidence — the commands and their
+  output under `evidence/`, with the remote and commit needed to rebuild. That is how it sits
+  beside "never /tmp": a transcript has to survive the session, a clone can be made again. The
+  reason, as written there: a clone under `_agent/` is a nested repository in a store meant to
+  replicate, a second copy of a project's source with its licence, and the one rebuildable thing
+  in the store. The `experiments/` line now reads as harnesses, scripts and files that fit
+  nowhere else — never a clone or worktree — so the "if nothing fits: `experiments/`" rule stays
+  true, and the sentence that sends every product under `_agent/` points at the rule. Each client
+  file names where a scratch clone goes or records it unmeasured: Claude Code, the scratchpad
+  directory the session's environment names, one subdirectory per sub-agent because sub-agents
+  share it; Codex and Cowork, unmeasured; OpenClaw, unmeasured, with its Gateway check's scratch
+  root ruled out because it exists for one check and is removed after it. **Decision (Brandon,
+  2026-10-12): the rule as proposed.** Lane worktrees stay where they are, scratch repositories
+  outside `_agent/` are not banned, and nothing is deleted by this amendment; what is already
+  under `_agent/` is decided on the issue, not here.
+
 - **2026-10-12 (#1) — A skill never overrides Parts A–B.** Issue #119: A1 said a repository's
   own `AGENTS.md` / `CLAUDE.md` never overrides Parts A–B, and A4 said RULE ZERO overrides any
   environment default, but nothing said which holds when a skill's instructions disagree with the
