@@ -10,6 +10,18 @@ simply in order. A bare `(n)` after a source — "CodeRabbit on claude-skills #6
 of amendments in that batch**, not an ordinal; the two notations predate each other and neither is
 being retrofitted onto the other.
 
+- **2026-10-12 (#1) — A skill never overrides Parts A–B.** Issue #119: A1 said a repository's
+  own `AGENTS.md` / `CLAUDE.md` never overrides Parts A–B, and A4 said RULE ZERO overrides any
+  environment default, but nothing said which holds when a skill's instructions disagree with the
+  agreement; A6's artifact-placement sentence covered that one case and nothing else. A1 now says
+  it, beside the repository-docs sentence: where a skill's instructions and Parts A–B disagree,
+  the agreement holds, and the agent says that it met the disagreement rather than choosing
+  silently. The reporting half is kept on purpose: a disagreement never reported is never fixed
+  at its source. A6's sentence now reads as one case of A1's rule instead of stating a precedence
+  of its own, so the two cannot say different things; off-fleet fallbacks remain the skill's.
+  **Decision (Brandon, 2026-10-12): adopt the clause as proposed.** No skill is named or changed,
+  and two skills that disagree with each other are not ruled on.
+
 - **2026-10-07 (#112) — OpenClaw: this amendment defines an inactive cross-session native-boundary
   record.** Issue #112: Once activated, fresh sessions may suppress a
   repeated, confirmed Bubblewrap prelaunch discovery only by consulting a valid

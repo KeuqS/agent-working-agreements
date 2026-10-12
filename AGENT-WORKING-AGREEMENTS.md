@@ -35,7 +35,10 @@ The AWA governs **every session Brandon runs, on any of his repositories, wherev
 lives** — a brand-new repo with no history, a one-off fix, or a multi-wave initiative alike.
 Checkouts are migrating under `sansfaux/` as they are rebuilt; location changes nothing. A repo's
 own `AGENTS.md` / `CLAUDE.md` adds project specifics (its CI gate, its exports, its conventions)
-and never overrides Parts A–B. Initiatives (`_agent/initiatives/`) are how *orchestrated* work is
+and never overrides Parts A–B. **Neither does a skill: where a skill's instructions and Parts A–B
+disagree, the agreement holds, and you say that you met the disagreement** rather than choosing
+silently — a disagreement never reported is never fixed at its source (Brandon, 2026-10-12).
+Initiatives (`_agent/initiatives/`) are how *orchestrated* work is
 organised, not a gate on whether these rules apply: with no MPD, you are in **attended mode** (B1).
 Skills come from the `brandonperfetti-skills` plugin (mirror of `mattpocock/skills` plus
 Brandon's own); read the relevant skill *before* that kind of work — `orchestrate`, `deep-grill`,
@@ -184,9 +187,10 @@ An **on-fleet workspace** is one where walking upward from the working directory
 `AGENT-WORKING-AGREEMENTS.md` is not a marker because this agreement is a repository whose file
 appears at the root of every clone and worktree.
 
-**Artifact placement precedence.** On an on-fleet workspace, the `agent-workspace` convention
-governs where agent artifacts are written and overrides any generic skill default; off-fleet
-fallbacks remain the skill's to define.
+**Artifact placement precedence** is one case of A1's rule that a skill never overrides Parts
+A–B: on an on-fleet workspace, where agent artifacts are written is this section's to decide (the
+`agent-workspace` convention carries it out), not a skill's default; off-fleet fallbacks remain
+the skill's to define.
 
 On an on-fleet workspace, everything an agent produces goes under `_agent/`:
 
